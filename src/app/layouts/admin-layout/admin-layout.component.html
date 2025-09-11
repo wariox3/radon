@@ -1,14 +1,15 @@
 <div class="h-100 flex flex-col min-h-screen">
   <!-- Cambio importante aquí -->
-  <app-sidebar></app-sidebar>
-  <div class="wrapper flex grow flex-col">
+  <!-- <app-sidebar></app-sidebar> -->
+  <!-- TODO: se removio clase wrapper -->
+  <div class="mt-[70px] flex grow flex-col">
     <app-header></app-header>
     <main class="grow content pt-5" id="content" role="content">
       <!-- begin: container -->
       <div class="container-fixed" id="content_container"></div>
       <!-- end: container -->
       <!-- begin: container -->
-      <div class="container-fixed">
+      <div class="container-fixed" style="max-width: 1200px !important; margin: 0 auto !important">
         <router-outlet></router-outlet>
       </div>
       <!-- end: container -->
