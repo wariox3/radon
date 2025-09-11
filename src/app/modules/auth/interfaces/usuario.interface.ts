@@ -39,4 +39,6 @@ export interface Usuario {
   is_active: boolean;
   socio_id: number | null;
   verificado: boolean;
+  empresa_nombre: string;
+  empresa_numero_identificacion: string;
 }
