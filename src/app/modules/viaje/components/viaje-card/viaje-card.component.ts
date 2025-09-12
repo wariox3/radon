@@ -14,12 +14,12 @@ import { EstadoBadgeComponent } from '@tamerlantian/ui-components';
 })
 export class ViajeCardComponent {
   @Input() viaje!: Viaje;
-  @Output() propuestaAceptada = new EventEmitter<number>();
+  @Output() propuestaAceptada = new EventEmitter<{ propuestaId: number; viajeId: number }>();
   @Output() eliminarViaje = new EventEmitter<number>();
   @Output() cancelarViaje = new EventEmitter<number>();
 
-  aceptarPropuesta(propuestaId: number): void {
-    this.propuestaAceptada.emit(propuestaId);
+  aceptarPropuesta(propuestaId: number, viajeId: number): void {
+    this.propuestaAceptada.emit({ propuestaId, viajeId });
   }
 
   eliminar(viajeId: number): void {

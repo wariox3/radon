@@ -11,12 +11,13 @@ export class NegocioRepository {
 
   constructor() {}
 
-  nuevoViaje(id: number, schemaName: string) {
+  nuevoViaje(propuestaId: number, viajeId: number, schemaName: string) {
     const url = this._urlService.buildSubdomainUrl(schemaName);
     return this._httpBase.post<{ estado_aprobado: true }>(
       `${url}/transporte/negocio/nuevo-viaje/`,
       {
-        viaje_id: id,
+        viaje_id: viajeId,
+        propuesta_id: propuestaId,
       }
     );
   }

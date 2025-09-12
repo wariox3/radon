@@ -35,12 +35,13 @@ export default class ViajeComponent implements OnInit {
       });
   }
 
-  aceptarPropuesta(propuestaId: number): void {
+  aceptarPropuesta({ propuestaId }: { propuestaId: number; viajeId: number }): void {
     this._viajeRepository
       .aceptarPropuesta(propuestaId)
       .pipe(
         switchMap(response => {
           return this._negocioRepository.nuevoViaje(
+            propuestaId,
             response.propuesta.viaje,
             response.propuesta.schema_name
           );
