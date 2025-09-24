@@ -104,7 +104,7 @@
             @if (!viaje.datos.estado_aceptado) {
               <button
                 class="btn btn-sm btn-success accept-btn"
-                (click)="aceptarPropuesta(propuesta.id)"
+                (click)="aceptarPropuesta(propuesta.id, viaje.datos.id)"
               >
                 Aceptar
               </button>

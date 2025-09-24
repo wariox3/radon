@@ -52,6 +52,7 @@ export class ViajeFormularioComponent implements OnInit {
     puntos_entrega: new FormControl(null, [Validators.required, Validators.min(0)]),
     solicitud_cliente: new FormControl(true, [Validators.required]),
     comentario: new FormControl(null, []),
+    numero_identificacion: new FormControl(null, []),
   });
 
   ngOnInit(): void {
@@ -72,7 +73,8 @@ export class ViajeFormularioComponent implements OnInit {
   private _initForm() {
     this.viajeForm.patchValue({
       usuario: this._usuario?.id,
-      cliente: this._usuario?.nombre_corto,
+      cliente: this._usuario?.empresa_nombre,
+      numero_identificacion: this._usuario?.empresa_numero_identificacion,
     });
   }
 

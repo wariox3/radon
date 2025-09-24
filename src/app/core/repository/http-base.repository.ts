@@ -1,20 +1,17 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment';
 import { QueryParams } from '../interfaces/api.interface';
+import { UrlService } from '../services/url.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpBaseRepository {
   private httpClient = inject(HttpClient);
-  private baseUrl: string;
+  private urlService = inject(UrlService);
 
-  constructor() {
-    // Usa directamente la URL base sin subdominio
-    this.baseUrl = environment.apiBase; // http://reddocapi.online
-  }
+  constructor() {}
 
   /**
    * Determina si una URL es completa (comienza con http:// o https://)
@@ -22,7 +19,7 @@ export class HttpBaseRepository {
    * @returns boolean indicando si es una URL completa
    */
   private isFullUrl(url: string): boolean {
-    return url.startsWith('http://') || url.startsWith('https://');
+    return this.urlService.isFullUrl(url);
   }
 
   /**
@@ -34,9 +31,8 @@ export class HttpBaseRepository {
     if (this.isFullUrl(endpoint)) {
       return endpoint; // Si ya es una URL completa, la devolvemos tal cual
     }
-    // Normalizar la ruta para evitar dobles barras
-    const normalizedEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
-    return `${this.baseUrl}/${normalizedEndpoint}`;
+    // Usar el servicio centralizado para construir la URL
+    return this.urlService.buildBaseUrl(endpoint);
   }
 
   // Método GET para listas

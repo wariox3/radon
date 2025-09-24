@@ -36,6 +36,7 @@ export interface Propuesta {
   id: number;
   precio: number;
   contenedor_id: number;
+  schema_name: string;
   empresa: string;
   usuario: number;
   viaje: number;

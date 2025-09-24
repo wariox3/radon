@@ -4,7 +4,7 @@ import { AlertaService } from '@app/common/services/alerta.service';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { QueryParams } from '../interfaces/api.interface';
-import { SubdominioService } from '../services/subdominio.service';
+import { UrlService } from '../services/url.service';
 import { HttpBaseRepository } from './http-base.repository';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { HttpBaseRepository } from './http-base.repository';
 })
 export class GeneralRepository {
   private httpBase = inject(HttpBaseRepository);
-  private subdominioService = inject(SubdominioService);
+  private urlService = inject(UrlService);
   private alertaService = inject(AlertaService);
 
   /**
@@ -84,11 +84,11 @@ export class GeneralRepository {
    */
   public descargarArchivos(endpoint: string, queryParams: QueryParams = {}): void {
     // this.alertaService.mensajaEspera('espera');
-    this.subdominioService
-      .getSubdominioUrl()
+    this.urlService
+      .getSubdomainUrl()
       .pipe(
-        switchMap(subdominioUrl => {
-          const url = `${subdominioUrl}/${endpoint}`;
+        switchMap(subdomainUrl => {
+          const url = `${subdomainUrl}/${endpoint}`;
           return this.httpBase.getArchivo(url, queryParams);
         }),
         catchError(() => {
@@ -119,18 +119,18 @@ export class GeneralRepository {
   // Métodos privados que utilizan el subdominio
 
   private getWithSubdominio<T>(endpoint: string, params?: QueryParams): Observable<T> {
-    return this.subdominioService.getSubdominioUrl().pipe(
-      switchMap(subdominioUrl => {
-        const url = `${subdominioUrl}/${endpoint}`;
+    return this.urlService.getSubdomainUrl().pipe(
+      switchMap(subdomainUrl => {
+        const url = `${subdomainUrl}/${endpoint}`;
         return this.httpBase.get<T>(url, params);
       })
     );
   }
 
   private postWithSubdominio<T>(endpoint: string, data: any): Observable<T> {
-    return this.subdominioService.getSubdominioUrl().pipe(
-      switchMap(subdominioUrl => {
-        const url = `${subdominioUrl}/${endpoint}`;
+    return this.urlService.getSubdomainUrl().pipe(
+      switchMap(subdomainUrl => {
+        const url = `${subdomainUrl}/${endpoint}`;
 
         return this.httpBase.post<T>(url, data);
       })
@@ -138,27 +138,27 @@ export class GeneralRepository {
   }
 
   private putWithSubdominio<T>(endpoint: string, data: any): Observable<T> {
-    return this.subdominioService.getSubdominioUrl().pipe(
-      switchMap(subdominioUrl => {
-        const url = `${subdominioUrl}/${endpoint}`;
+    return this.urlService.getSubdomainUrl().pipe(
+      switchMap(subdomainUrl => {
+        const url = `${subdomainUrl}/${endpoint}`;
         return this.httpBase.put<T>(url, data);
       })
     );
   }
 
   private patchWithSubdominio<T>(endpoint: string, data: any): Observable<T> {
-    return this.subdominioService.getSubdominioUrl().pipe(
-      switchMap(subdominioUrl => {
-        const url = `${subdominioUrl}/${endpoint}`;
+    return this.urlService.getSubdomainUrl().pipe(
+      switchMap(subdomainUrl => {
+        const url = `${subdomainUrl}/${endpoint}`;
         return this.httpBase.patch<T>(url, data);
       })
     );
   }
 
   private deleteWithSubdominio<T>(endpoint: string): Observable<T> {
-    return this.subdominioService.getSubdominioUrl().pipe(
-      switchMap(subdominioUrl => {
-        const url = `${subdominioUrl}/${endpoint}`;
+    return this.urlService.getSubdomainUrl().pipe(
+      switchMap(subdomainUrl => {
+        const url = `${subdomainUrl}/${endpoint}`;
         return this.httpBase.delete(url, {});
       })
     );
